@@ -281,6 +281,12 @@ func (cc *hugoBuilderCommon) handleCommonBuilderFlags(cmd *cobra.Command) {
 	cmd.PersistentFlags().StringP("themesDir", "", "", "filesystem path to themes directory")
 	cmd.PersistentFlags().StringP("ignoreVendorPaths", "", "", "ignores any _vendor for module paths matching the given Glob pattern")
 	cmd.PersistentFlags().StringVar(&cc.clock, "clock", "", "set the clock used by Hugo, e.g. --clock 2021-11-06T22:30:00.00+09:00")
+
+	// Deprecated flags
+	cmd.PersistentFlags().MarkDeprecated("themesDir", "use --theme instead")
+
+	// Hide this
+	cmd.PersistentFlags().MarkHidden("themesDir")
 }
 
 func (cc *hugoBuilderCommon) handleFlags(cmd *cobra.Command) {
@@ -315,10 +321,14 @@ func (cc *hugoBuilderCommon) handleFlags(cmd *cobra.Command) {
 	cmd.Flags().StringVarP(&cc.mutexprofile, "profile-mutex", "", "", "write Mutex profile to `file`")
 	cmd.Flags().StringVarP(&cc.traceprofile, "trace", "", "", "write trace to `file` (not useful in general)")
 
+	// Deprecated flags
+	cmd.Flags().MarkDeprecated("theme", "this flag is deprecated")
+
 	// Hide these for now.
 	cmd.Flags().MarkHidden("profile-cpu")
 	cmd.Flags().MarkHidden("profile-mem")
 	cmd.Flags().MarkHidden("profile-mutex")
+	cmd.Flags().MarkHidden("theme")
 
 	cmd.Flags().StringSlice("disableKinds", []string{}, "disable different kind of pages (home, RSS etc.)")
 
